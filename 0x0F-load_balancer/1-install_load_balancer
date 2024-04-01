@@ -16,8 +16,8 @@ frontend  hanane-frontend
         default_backend hanane-backend
 backend hanane-backend
         balance roundrobin
-        server 473884-web-01 100.25.148.135:80 check
-        server 473884-web-02 100.26.240.137:80 check
+        server 473884-web-01 52.207.208.33:80 check
+        server 473884-web-02 35.174.176.97:80 check
 "
 echo "$server_config" | sudo tee -a /etc/haproxy/haproxy.cfg
 
