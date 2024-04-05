@@ -33,19 +33,19 @@ defaults
 	errorfile 503 /etc/haproxy/errors/503.http
 	errorfile 504 /etc/haproxy/errors/504.http
 
-frontend  ehoneah-frontend-http
+frontend  hanane-frontend-http
         bind *:80
         mode http
 	http-request set-header X-Forwarded-Proto http
-        default_backend ehoneah-backend
+        default_backend hanane-backend
 
-frontend ehoneah-frontend-https
-	bind *:443 ssl crt /etc/haproxy/certs/www.ehoneah.tech.pem
+frontend hanane-frontend-https
+	bind *:443 ssl crt /etc/haproxy/certs/www.hananezoubi.tech.pem
 	http-request set-header X-Forwarded-Proto https
 	http-request redirect scheme https code 301 unless { ssl_fc }
-	default_backend ehoneah-backend
+	default_backend hanane-backend
 
-backend ehoneah-backend
+backend hanane-backend
         balance roundrobin
         server 473884-web-01 52.207.208.33:80 check
         server 473884-web-02 35.174.176.97:80 check
