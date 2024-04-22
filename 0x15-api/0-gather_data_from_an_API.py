@@ -1,9 +1,5 @@
 #!/usr/bin/python3
-""" to fetche and display TODO list progress for a given employee.
-
-    Args:
-    - employee_id (int): ID of the employee to retrieve TODO list for.
-"""
+""" to fetche and display TODO list progress for a given employee"""
 
 import requests
 from sys import argv
