@@ -1,49 +1,33 @@
 #!/usr/bin/python3
+""" to fetche and display TODO list progress for a given employee.
 
-"""
-Script to retrieve and display TODO list progress for a given employee
-using a REST API.
-
-Requirements:
-- Use urllib or requests module
-- Accept an integer as a parameter (employee ID)
-- Display progress information in the specified format
+    Args:
+    - employee_id (int): ID of the employee to retrieve TODO list for.
 """
 
 import requests
-import sys
-
-def fetch_employee_todo_progress(employee_id):
-    # Fetch employee data
-    response = requests.get(f'https://jsonplaceholder.typicode.com/users/{employee_id}')
-    employee_data = response.json()
-    employee_name = employee_data['name']
-
-    # Fetch todo list
-    response = requests.get(f'https://jsonplaceholder.typicode.com/todos?userId={employee_id}')
-    todo_list = response.json()
-
-    # Calculate progress
-    total_tasks = len(todo_list)
-    completed_tasks = len([task for task in todo_list if task['completed']])
-    progress = f"{employee_name} is done with tasks ({completed_tasks}/{total_tasks}):"
-
-    # Display progress
-    print(progress)
-    for task in todo_list:
-        if task['completed']:
-            print(f"\t{task['title']}")
+from sys import argv
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print("Usage: python script.py EMPLOYEE_ID")
-        sys.exit(1)
+    # Get the user ID from the command line argument
+    user_id = argv[1]
 
-    try:
-        employee_id = int(sys.argv[1])
-    except ValueError:
-        print("EMPLOYEE_ID must be an integer")
-        sys.exit(1)
+    # Base URL for the API
+    url = "https://jsonplaceholder.typicode.com/"
 
-    fetch_employee_todo_progress(employee_id)
+    # Get the user information
+    user = requests.get(url + "users/{}".format(user_id)).json()
 
+    # Get the user's TODO list
+    todos = requests.get(url + "todos", params={"userId": user_id}).json()
+
+    # Filter the completed tasks
+    completed_tasks = [task for task in todos if task.get('completed') is True]
+
+    # Print the user's progress
+    print("Employee {} is done with tasks({}/{}):".format(user.get('name'),
+        len(completed_tasks), len(todos)))
+
+    # Print the titles of completed tasks
+    for task in completed_tasks:
+        print("\t{}".format(task.get('title')))
