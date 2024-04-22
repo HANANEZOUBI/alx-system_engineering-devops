@@ -2,7 +2,6 @@
 """
 Script that uses JSONPlaceholder API to get information about an employee
 and exports TODO list to JSON.
-
 Requirements:
 - Records all tasks that are owned by this employee
 - Format must be: { "USER_ID": [{"task": "TASK_TITLE", "completed":
@@ -35,7 +34,6 @@ def get_employee_info_and_tasks(employee_id):
     # Fetch user information
     user_response = requests.get(user_url)
     user_data = user_response.json()
-
 
     username = user_data.get('username')
     todos_response = requests.get(todos_url)
